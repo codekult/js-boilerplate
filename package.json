@@ -1,0 +1,29 @@
+{
+  "name": "js-boilerplate",
+  "version": "1.0.0",
+  "description": "A basic JS workflow boilerplate",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codekult/js-boilerplate.git"
+  },
+  "keywords": [
+    "js",
+    "es6",
+    "browserify",
+    "babelify",
+    "babel",
+    "eslint",
+    "travis",
+    "boilerplate"
+  ],
+  "author": "codekult",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codekult/js-boilerplate/issues"
+  },
+  "homepage": "https://github.com/codekult/js-boilerplate"
+}
