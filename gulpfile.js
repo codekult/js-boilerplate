@@ -2,8 +2,9 @@ require('babel/register');
 
 /* DEPENDENCIES */
 var gulp = require('gulp'),
-    glob = require('glob'),
     path = require('path'),
+    fs = require('fs'),
+    glob = require('glob'),
     del = require('del'),
     rename = require('gulp-rename'),
     runSequence = require('run-sequence'),
@@ -82,11 +83,18 @@ gulp.task('scripts-bundle', function () {
 gulp.task('setSrcPath', function (callback) {
     setSrcScripts()
     .then(function () {
-        callback();
+        // `factor-bundle` doesn't create output directories so…
+        fs.mkdir(dest.build.scripts, function (err) {
+            if (err) {
+                throw err;
+            }
+
+            callback();
+        });
     });
 });
 
-gulp.task('scripts-factor-bundle', ['setSrcPath'], function () {
+gulp.task('scripts-factor-bundle', ['setSrcPath', ], function () {
     return browserify({
         entries: src.scripts.multipleEntries,
         debug: true
@@ -121,7 +129,7 @@ gulp.task('scripts-build', function () {
 });
 
 gulp.task('clean-build', function () {
-    del([dest.build.root + 'scripts/*']);
+    del([dest.build.root + '*']);
 });
 
 gulp.task('build', function () {
@@ -134,7 +142,7 @@ gulp.task('scripts-dist', function () {
 });
 
 gulp.task('clean-dist', function () {
-    del([dest.dist.root + 'scripts/*']);
+    del([dest.dist.root + '*']);
 });
 
 gulp.task('dist', function () {
