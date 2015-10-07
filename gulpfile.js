@@ -36,7 +36,7 @@ var src = {
         }
     };
 
-// Search for JS src files and set `src.scripts.entries` and `src.scripts.outputs`
+// Search for JS src files and set `multipleEntries` and `multipleOutputs`
 function setSrcScripts() {
     return new Promise(function (resolve, reject) {
         glob(src.scripts.multipleEntriesGlob, function (err, srcFiles) {
