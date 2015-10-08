@@ -3,7 +3,7 @@ require('babel/register');
 /* DEPENDENCIES */
 var gulp = require('gulp'),
     path = require('path'),
-    fs = require('fs'),
+    mkdirp = require('mkdirp'),
     glob = require('glob'),
     del = require('del'),
     rename = require('gulp-rename'),
@@ -87,7 +87,7 @@ gulp.task('setSrcPath', function (callback) {
     setSrcScripts()
     .then(function () {
         // `factor-bundle` doesn't create output directories so…
-        fs.mkdir(dest.build.scripts, function (err) {
+        mkdirp(dest.build.scripts, function (err) {
             if (err) {
                 throw err;
             }
@@ -149,7 +149,7 @@ gulp.task('clean-dist', function () {
 });
 
 gulp.task('dist', function () {
-    runSequence('clean-dist', 'scripts-dist', 'revision-dist');
+    runSequence('clean-dist', 'scripts-dist');
 });
 
 /* WATCH */
