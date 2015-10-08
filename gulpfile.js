@@ -24,19 +24,16 @@ var src = {
             all : './src/scripts/**/*.js',
             singleEntry: './src/scripts/entry.js',
             multipleEntriesGlob: './src/scripts/*.js'
-        },
-        templates: './src/templates/*.hbs'
+        }
     },
     dest = {
         build: {
             root: './build/',
-            scripts: './build/scripts/',
-            templates: './build/templates/'
+            scripts: './build/scripts/'
         },
         dist: {
             root: './dist/',
-            scripts: './dist/scripts/',
-            templates: './dist/templates/'
+            scripts: './dist/scripts/'
         }
     };
 
