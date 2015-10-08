@@ -8,8 +8,8 @@ var gulp = require('gulp'),
     del = require('del'),
     rename = require('gulp-rename'),
     runSequence = require('run-sequence'),
-    sourcemaps = require('gulp-sourcemaps'),
     size = require('gulp-size'),
+    sourcemaps = require('gulp-sourcemaps'),
     eslint = require('gulp-eslint'),
     babelify = require('babelify'),
     browserify = require('browserify'),
@@ -24,16 +24,19 @@ var src = {
             all : './src/scripts/**/*.js',
             singleEntry: './src/scripts/entry.js',
             multipleEntriesGlob: './src/scripts/*.js'
-        }
+        },
+        templates: './src/templates/*.hbs'
     },
     dest = {
         build: {
             root: './build/',
-            scripts: './build/scripts/'
+            scripts: './build/scripts/',
+            templates: './build/templates/'
         },
         dist: {
             root: './dist/',
-            scripts: './dist/scripts/'
+            scripts: './dist/scripts/',
+            templates: './dist/templates/'
         }
     };
 
@@ -69,13 +72,13 @@ gulp.task('scripts-lint', function () {
 // Output: single file (`app.js`).
 gulp.task('scripts-bundle', function () {
     return browserify({
-        entries: src.scripts.singleEntry,
-        debug: true
-    })
-    .transform(babelify)
-    .bundle()
-    .pipe(source('app.js'))
-    .pipe(gulp.dest(dest.build.scripts));
+            entries: src.scripts.singleEntry,
+            debug: true
+        })
+        .transform(babelify)
+        .bundle()
+        .pipe(source('app.js'))
+        .pipe(gulp.dest(dest.build.scripts));
 });
 
 // Bundle for multiple entry points.
@@ -96,16 +99,16 @@ gulp.task('setSrcPath', function (callback) {
 
 gulp.task('scripts-factor-bundle', ['setSrcPath', ], function () {
     return browserify({
-        entries: src.scripts.multipleEntries,
-        debug: true
-    })
-    .plugin(factor, {
-        outputs: src.scripts.multipleOutputs
-    })
-    .transform(babelify)
-    .bundle()
-    .pipe(source('common.js'))
-    .pipe(gulp.dest(dest.build.scripts));
+            entries: src.scripts.multipleEntries,
+            debug: true
+        })
+        .plugin(factor, {
+            outputs: src.scripts.multipleOutputs
+        })
+        .transform(babelify)
+        .bundle()
+        .pipe(source('common.js'))
+        .pipe(gulp.dest(dest.build.scripts));
 });
 
 gulp.task('scripts-minify', function () {
@@ -129,7 +132,7 @@ gulp.task('scripts-build', function () {
 });
 
 gulp.task('clean-build', function () {
-    del([dest.build.root + '*']);
+    del.sync([dest.build.root + '*']);
 });
 
 gulp.task('build', function () {
@@ -142,11 +145,11 @@ gulp.task('scripts-dist', function () {
 });
 
 gulp.task('clean-dist', function () {
-    del([dest.dist.root + '*']);
+    del.sync([dest.dist.root + '*']);
 });
 
 gulp.task('dist', function () {
-    runSequence('clean-dist', 'scripts-dist');
+    runSequence('clean-dist', 'scripts-dist', 'revision-dist');
 });
 
 /* WATCH */
