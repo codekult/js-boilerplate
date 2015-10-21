@@ -62,6 +62,7 @@
         "max-statements": [0, 10],
         "new-parens": [2],
         "new-cap": [2],
+        "new-empty-pattern": [2],
         "newline-after-var": [0],
         "no-alert": [2],
         "no-array-constructor": [2],
